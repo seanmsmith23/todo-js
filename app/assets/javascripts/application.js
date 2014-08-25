@@ -45,7 +45,7 @@ $(document).ready(function() {
 
     }
 
-    $flash.delay(5000).fadeOut();
+    $('.flash-success').delay(3000).fadeOut();
   });
 
 

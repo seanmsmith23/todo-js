@@ -17,4 +17,19 @@ describe "Homepage" do
 
     expect(page).to have_content("Haircut")
   end
+
+  it "should show a flash message that fades out" do
+    visit root_path
+
+    fill_in 'todo', with: "Haircut"
+    click_button("Create Todo")
+
+    expect(page).to have_content("Todo created")
+
+    sleep(6)
+
+    expect(page).to_not have_content("Todo created")
+
+
+  end
 end
