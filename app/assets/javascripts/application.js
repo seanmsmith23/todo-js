@@ -20,6 +20,7 @@ $(document).ready(function() {
   $body.append("<form class='center' id='todo'><input name='todo' class='todo-form' id='todo-input' type='text'><br><button class='todo-form' id='input-button'>Create Todo</button></form>")
   $body.append("<h3 class='center'>Todo!</h3>");
   $body.append("<ul id='all-todos'></ul>");
+  $body.append("<div class='completed'><h3 class='center'>Complete</h3></div>");
 
   var $allTodos = $('ul#all-todos');
   var $createTodo = $('#input-button');
@@ -32,7 +33,7 @@ $(document).ready(function() {
     e.preventDefault();
     var $input = $('#todo-input');
 
-    $allTodos.append('<li>' + $input.val() + "<button class='task-x'>✗</button>" + '</li>');
+    $allTodos.append('<li>' + $input.val() + "<button class='check-mark'>✓</button> " + "<button class='task-x'>✗</button>" + '</li>');
     $('li:nth-child(even)').addClass('gray-back');
 
     $input.val("");
@@ -68,6 +69,10 @@ $(document).ready(function() {
         removeParent($(this),'div');
       });
 
+    });
+
+    $('.check-mark').click(function(){
+      $(this).parents('li').appendTo('.completed')
     });
 
     $('.flash-success').delay(5000).fadeOut();

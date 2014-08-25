@@ -100,3 +100,12 @@ button.task-x {
     right: 38%;
 }
 
+.check-mark {
+    color: green;
+    border: 0;
+    background: none;
+    position: absolute;
+    right: 40%;
+}
+
+

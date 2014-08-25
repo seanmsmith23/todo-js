@@ -80,4 +80,20 @@ describe "Homepage" do
 
     expect(page).to_not have_content("Todo deleted")
   end
+
+  it "should allow a task to be completed and moved to the complete section" do
+    visit root_path
+    fill_in 'todo', with: "Haircut"
+    click_button("Create Todo")
+
+    find('.check-mark').click
+
+    within('#all-todos') do
+      expect(page).to_not have_content("Haircut")
+    end
+
+    within('.completed') do
+      expect(page).to have_content("Haircut")
+    end
+  end
 end
