@@ -42,4 +42,14 @@ describe "Homepage" do
 
     expect(page).to_not have_content("Todo created")
   end
+
+  it "should allow a task to be deleted when clicking the x" do
+    visit root_path
+    fill_in 'todo', with: "Haircut"
+    click_button("Create Todo")
+
+    find('button.task-x').click
+
+    expect(page).to_not have_content("Haircut")
+  end
 end

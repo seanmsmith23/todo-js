@@ -43,13 +43,13 @@ li {
     background-color: green;
     border: 1px solid darkgreen;
     color: white;
-    align-content: flex-end;
+    /*clear: both;*/
 }
 
 .flash-text {
-    margin: 0 0 0 20%;
+    margin: 0 0 0 0;
     display: inline-block;
-
+    /*float: left;*/
 }
 
 ul {
@@ -59,7 +59,7 @@ ul {
 .x {
     color: black;
     display: inline-block;
-    margin-left: 20%;
+    float: left;
 }
 
 a:link {
@@ -67,6 +67,20 @@ a:link {
 }
 
 button.x {
+    border: 0;
+    background: none;
+    position: absolute;
+    right: 38%;
+}
+
+.task-x {
+    color: red;
+    display: inline-block;
+    position: absolute;
+    right: 38%;
+}
+
+button.task-x {
     border: 0;
     background: none;
 }

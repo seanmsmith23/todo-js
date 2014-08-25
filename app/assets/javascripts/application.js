@@ -30,7 +30,7 @@ $(document).ready(function() {
     e.preventDefault();
     var $input = $('#todo-input');
 
-    $allTodos.append('<li>' + $input.val() + '</li>');
+    $allTodos.append('<li>' + $input.val() + "<button class='task-x'>✗</button>" + '</li>');
     $('li:nth-child(even)').addClass('gray-back');
 
     $input.val("");
@@ -46,6 +46,10 @@ $(document).ready(function() {
 
     $('button.x').on('click', function(){
       $(this).parents('div').remove();
+    });
+
+    $('button.task-x').click(function(){
+      $(this).parents('li').remove();
     });
 
     $('.flash-success').delay(5000).fadeOut();
