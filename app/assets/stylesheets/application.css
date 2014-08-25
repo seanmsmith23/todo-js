@@ -108,4 +108,16 @@ button.task-x {
     right: 40%;
 }
 
+.task-flash-complete {
+    margin: 0 auto 0 auto;
+    width: 25%;
+    background-color: green;
+    border: 1px solid darkgreen;
+    color: white;
+}
+
+
+
+
+
 

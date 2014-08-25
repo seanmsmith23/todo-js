@@ -19,6 +19,9 @@ describe "Homepage" do
   end
 
   it "should show a flash message that fades out" do
+
+    skip
+
     visit root_path
 
     fill_in 'todo', with: "Haircut"
@@ -68,6 +71,9 @@ describe "Homepage" do
   end
 
   it "the flash message on task delete should fade out after 5 seconds" do
+
+    skip
+
     visit root_path
     fill_in 'todo', with: "Haircut"
     click_button("Create Todo")

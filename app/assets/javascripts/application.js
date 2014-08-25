@@ -20,7 +20,9 @@ $(document).ready(function() {
   $body.append("<form class='center' id='todo'><input name='todo' class='todo-form' id='todo-input' type='text'><br><button class='todo-form' id='input-button'>Create Todo</button></form>")
   $body.append("<h3 class='center'>Todo!</h3>");
   $body.append("<ul id='all-todos'></ul>");
-  $body.append("<div class='completed'><h3 class='center'>Complete</h3></div>");
+  $body.append("<div class='completed'><h3 class='center'>Complete</h3><ul class='completed-list'></ul></div>");
+
+  $('.completed').hide();
 
   var $allTodos = $('ul#all-todos');
   var $createTodo = $('#input-button');
@@ -42,9 +44,9 @@ $(document).ready(function() {
 
     if($flash.size() > 0){
       $flash.remove();
-      $('ul').prepend("<div class='flash-success center'><p class='flash-text'>Todo created</p><button class='x'>✗</button>");
+      $('#all-todos').prepend("<div class='flash-success center'><p class='flash-text'>Todo created</p><button class='x'>✗</button>");
     } else {
-      $('ul').prepend("<div class='flash-success center'><p class='flash-text'>Todo created</p><button class='x'>✗</button>");
+      $('#all-todos').prepend("<div class='flash-success center'><p class='flash-text'>Todo created</p><button class='x'>✗</button>");
     }
 
     $('button.x').on('click', function(){
@@ -52,15 +54,18 @@ $(document).ready(function() {
     });
 
     $('button.task-x').click(function(){
-      removeParent($(this),'li');
+
+      var $clicked = $(this)
+
+      $(this).parent('li').remove();
 
       var $taskFlash = $('.task-flash-remove');
 
       if($taskFlash.size() > 0){
         $taskFlash.remove();
-        $('ul').prepend("<div class='task-flash-remove center'><p class='flash-text'>Todo deleted</p><button class='remove-flash'>✗</button>");
+        $clicked.parent('ul').prepend("<div class='task-flash-remove center'><p class='flash-text'>Todo deleted</p><button class='remove-flash'>✗</button>");
       } else {
-        $('ul').prepend("<div class='task-flash-remove center'><p class='flash-text'>Todo deleted</p><button class='remove-flash'>✗</button>");
+        $clicked.parent('ul').prepend("<div class='task-flash-remove center'><p class='flash-text'>Todo deleted</p><button class='remove-flash'>✗</button>");
       }
 
       $('.task-flash-remove').delay(5000).fadeOut();
@@ -69,13 +74,33 @@ $(document).ready(function() {
         removeParent($(this),'div');
       });
 
+      if($('.completed li').length < 1){ $('.completed').hide() }
+
     });
 
     $('.check-mark').click(function(){
-      $(this).parents('li').appendTo('.completed')
+      $('.completed').show();
+      $(this).parents('li').appendTo('.completed-list');
+      $(this).remove();
+
+      var $taskComplete = $('.task-flash-complete');
+
+      if($taskComplete.size() > 0){
+        $taskComplete.remove();
+        $('.completed-list').prepend("<div class='task-flash-complete center'><p class='flash-text'>Todo completed</p><button class='remove-flash'>✗</button>");
+      } else {
+        $('.completed-list').prepend("<div class='task-flash-complete center'><p class='flash-text'>Todo completed</p><button class='remove-flash'>✗</button>");
+      }
+
+      $('.remove-flash').click(function(){
+        $(this).parent('div').remove()
+      });
+
+      $('.task-flash-complete').delay(5000).fadeOut();
+
+
     });
 
-    $('.flash-success').delay(5000).fadeOut();
   });
 
 
