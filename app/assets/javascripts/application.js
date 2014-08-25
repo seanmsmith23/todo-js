@@ -24,7 +24,9 @@ $(document).ready(function() {
   var $allTodos = $('ul#all-todos');
   var $createTodo = $('#input-button');
 
-
+  var removeParent = function(item,element){
+    item.parents(element).remove()
+  };
 
   $createTodo.click(function(e){
     e.preventDefault();
@@ -45,11 +47,12 @@ $(document).ready(function() {
     }
 
     $('button.x').on('click', function(){
-      $(this).parents('div').remove();
+      removeParent($(this),'div');
     });
 
     $('button.task-x').click(function(){
-      $(this).parents('li').remove();
+      removeParent($(this),'li');
+
       var $taskFlash = $('.task-flash-remove');
 
       if($taskFlash.size() > 0){
@@ -62,7 +65,7 @@ $(document).ready(function() {
       $('.task-flash-remove').delay(5000).fadeOut();
 
       $('.remove-flash').click(function(){
-        $(this).parents('div').remove();
+        removeParent($(this),'div');
       });
 
     });
