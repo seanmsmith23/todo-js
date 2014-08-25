@@ -15,5 +15,8 @@
 //= require_tree .
 
 $(document).ready(function() {
-  $('body').append("<h1>hello world, I'm from only javascript!</h1>");
+  var $body = $('body');
+  $body.append("<h1 class='center'>Todoly</h1>");
+  $body.append("<form class='center' id='todo'><input class='todo-form' id='todo-input' type='text'><br><button class='todo-form'>Create Todo</button></form>")
+  $body.append("")
 });
