@@ -84,3 +84,19 @@ button.task-x {
     border: 0;
     background: none;
 }
+
+.task-flash-remove {
+    margin: 0 auto 0 auto;
+    width: 25%;
+    background-color: red;
+    border: 1px solid darkred;
+    color: white;
+}
+
+.remove-flash {
+    border: 0;
+    background: none;
+    position: absolute;
+    right: 38%;
+}
+

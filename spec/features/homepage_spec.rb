@@ -52,4 +52,32 @@ describe "Homepage" do
 
     expect(page).to_not have_content("Haircut")
   end
+
+  it "the flash message on task deleted can be removed" do
+    visit root_path
+    fill_in 'todo', with: "Haircut"
+    click_button("Create Todo")
+
+    find('button.task-x').click
+
+    expect(page).to have_content("Todo deleted")
+
+    find('button.remove-flash').click
+
+    expect(page).to_not have_content("Todo deleted")
+  end
+
+  it "the flash message on task delete should fade out after 5 seconds" do
+    visit root_path
+    fill_in 'todo', with: "Haircut"
+    click_button("Create Todo")
+
+    find('button.task-x').click
+
+    expect(page).to have_content("Todo deleted")
+
+    sleep(6)
+
+    expect(page).to_not have_content("Todo deleted")
+  end
 end

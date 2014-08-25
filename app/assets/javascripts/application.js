@@ -50,6 +50,21 @@ $(document).ready(function() {
 
     $('button.task-x').click(function(){
       $(this).parents('li').remove();
+      var $taskFlash = $('.task-flash-remove');
+
+      if($taskFlash.size() > 0){
+        $taskFlash.remove();
+        $('ul').prepend("<div class='task-flash-remove center'><p class='flash-text'>Todo deleted</p><button class='remove-flash'>✗</button>");
+      } else {
+        $('ul').prepend("<div class='task-flash-remove center'><p class='flash-text'>Todo deleted</p><button class='remove-flash'>✗</button>");
+      }
+
+      $('.task-flash-remove').delay(5000).fadeOut();
+
+      $('.remove-flash').click(function(){
+        $(this).parents('div').remove();
+      });
+
     });
 
     $('.flash-success').delay(5000).fadeOut();
