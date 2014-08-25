@@ -23,3 +23,27 @@
 .todo-form {
     width: 25%;
 }
+
+li {
+    list-style-type: none;
+    margin-left: auto;
+    margin-right: auto;
+    width: 25%;
+}
+
+.gray-back {
+    background-color: lightgrey;
+}
+
+
+
+.flash-success {
+    width: 25%;
+    background-color: green;
+    border: 1px solid darkgreen;
+    color: white;
+}
+
+ul {
+    padding: 0;
+}

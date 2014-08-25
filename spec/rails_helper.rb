@@ -12,7 +12,6 @@ ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
-  Capybara.current_driver = :selenium
 
   config.use_transactional_fixtures = false
 
@@ -22,6 +21,7 @@ RSpec.configure do |config|
   end
 
   config.before do
+    Capybara.current_driver = :selenium
     DatabaseCleaner.start
   end
 

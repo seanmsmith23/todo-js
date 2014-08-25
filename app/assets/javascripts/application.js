@@ -17,6 +17,36 @@
 $(document).ready(function() {
   var $body = $('body');
   $body.append("<h1 class='center'>Todoly</h1>");
-  $body.append("<form class='center' id='todo'><input class='todo-form' id='todo-input' type='text'><br><button class='todo-form'>Create Todo</button></form>")
-  $body.append("")
+  $body.append("<form class='center' id='todo'><input name='todo' class='todo-form' id='todo-input' type='text'><br><button class='todo-form' id='input-button'>Create Todo</button></form>")
+  $body.append("<h3 class='center'>Todo!</h3>");
+  $body.append("<ul id='all-todos'></ul>");
+
+  var $allTodos = $('ul#all-todos');
+  var $createTodo = $('#input-button');
+
+
+
+  $createTodo.click(function(e){
+    e.preventDefault();
+    var $input = $('#todo-input');
+
+    $allTodos.append('<li>' + $input.val() + '</li>');
+    $('li:nth-child(even)').addClass('gray-back');
+
+    $input.val("");
+
+    var $flash = $('.flash-success');
+
+    if($flash.size() > 0){
+      $flash.remove();
+      $('ul').prepend("<p class='flash-success center'>Todo created</p>");
+    } else {
+      $('ul').prepend("<p class='flash-success center'>Todo created</p>");
+
+    }
+
+    $flash.delay(5000).fadeOut();
+  });
+
+
 });
