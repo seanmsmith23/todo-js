@@ -39,14 +39,18 @@ $(document).ready(function() {
 
     if($flash.size() > 0){
       $flash.remove();
-      $('ul').prepend("<p class='flash-success center'>Todo created</p>");
+      $('ul').prepend("<div class='flash-success center'><p class='flash-text'>Todo created</p><button class='x'>✗</button>");
     } else {
-      $('ul').prepend("<p class='flash-success center'>Todo created</p>");
-
+      $('ul').prepend("<div class='flash-success center'><p class='flash-text'>Todo created</p><button class='x'>✗</button>");
     }
 
-    $('.flash-success').delay(3000).fadeOut();
+    $('button.x').on('click', function(){
+      $(this).parents('div').remove();
+    });
+
+    $('.flash-success').delay(5000).fadeOut();
   });
+
 
 
 });

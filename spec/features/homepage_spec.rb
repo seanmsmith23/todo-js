@@ -29,7 +29,17 @@ describe "Homepage" do
     sleep(6)
 
     expect(page).to_not have_content("Todo created")
+  end
 
+  it "should show a flash that can be deleted by clicking the x" do
+    visit root_path
+    fill_in 'todo', with: "Haircut"
+    click_button("Create Todo")
 
+    expect(page).to have_content("Todo created")
+
+    find('.x').click
+
+    expect(page).to_not have_content("Todo created")
   end
 end

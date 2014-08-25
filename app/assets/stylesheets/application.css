@@ -38,12 +38,35 @@ li {
 
 
 .flash-success {
+    margin: 0 auto 0 auto;
     width: 25%;
     background-color: green;
     border: 1px solid darkgreen;
     color: white;
+    align-content: flex-end;
+}
+
+.flash-text {
+    margin: 0 0 0 20%;
+    display: inline-block;
+
 }
 
 ul {
     padding: 0;
+}
+
+.x {
+    color: black;
+    display: inline-block;
+    margin-left: 20%;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+button.x {
+    border: 0;
+    background: none;
 }
