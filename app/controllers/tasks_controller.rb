@@ -9,10 +9,15 @@ class TasksController < ApplicationController
   end
 
   def update
-
+    @task = Task.find_by_id(params[:id])
+    @task.completed = true
+    @task.save
+    render nothing: true
   end
 
   def destroy
-
+    @task = Task.find_by_id(params[:id])
+    @task.destroy
+    render nothing: true
   end
 end
