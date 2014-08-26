@@ -12,9 +12,26 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require_tree .
+
+
+function TodoApp(container, flash) {
+  this.flash = flash;
+  this.container = container;
+
+  // boot the todo app here
+
+  this.flash.notice("hello");
+}
+
+
+Object.create();
+
+
 
 $(document).ready(function() {
+  var flash = new Flash($('.flash'));
+  var todoApp = new TodoApp($('.todo-app', flash));
+
   var $body = $('body');
   $body.append("<h1 class='center'>Todoly</h1>");
   $body.append("<form class='center' id='todo'><input name='todo' class='todo-form' id='todo-input' type='text'><br><button class='todo-form' id='input-button'>Create Todo</button></form>")
@@ -22,87 +39,119 @@ $(document).ready(function() {
   $body.append("<ul id='all-todos'></ul>");
   $body.append("<div class='completed'><h3 class='center'>Complete</h3><ul class='completed-list'></ul></div>");
 
-  $('.completed').hide();
-
   var $allTodos = $('ul#all-todos');
   var $createTodo = $('#input-button');
+  var $input = $('#todo-input');
+  var $flash = $('.flash-success');
+
+  $('.completed').hide();
+
+  var newTask = function(id,description){
+    return ('<li data-id=' + id + '>' + description + "<button class='check-mark'>✓</button>" + "<button class='task-x'>✗</button>" + '</li>');
+  };
 
   var removeParent = function(item,element){
     item.parents(element).remove()
   };
 
+  var clearValue = function(element){
+    element.val("");
+  };
+
+  var addFlash = function(flashDOM, flashClass, addDOM){
+    if(flashDOM.size() > 0){
+      flashDOM.remove();
+      addDOM.prepend("<div class=" + flashClass + "><p class='flash-text'>Todo created</p><button class='x'>✗</button>");
+    } else {
+      addDOM.prepend("<div class=" + flashClass + "><p class='flash-text'>Todo created</p><button class='x'>✗</button>");
+    }
+  };
+
   $createTodo.click(function(e){
     e.preventDefault();
-    var $input = $('#todo-input');
 
-    $allTodos.append('<li>' + $input.val() + "<button class='check-mark'>✓</button> " + "<button class='task-x'>✗</button>" + '</li>');
+    $.ajax({
+      url: "/tasks",
+      type: "post",
+      data: {"description": $input.val()},
+      success: function(data){
+        var $id = data.id;
+        var $descrip = data.description;
+        $allTodos.append(newTask($id, $descrip));
+      }
+    });
+
     $('li:nth-child(even)').addClass('gray-back');
+    clearValue($input)
 
-    $input.val("");
-
-    var $flash = $('.flash-success');
-
-    if($flash.size() > 0){
-      $flash.remove();
-      $('#all-todos').prepend("<div class='flash-success center'><p class='flash-text'>Todo created</p><button class='x'>✗</button>");
-    } else {
-      $('#all-todos').prepend("<div class='flash-success center'><p class='flash-text'>Todo created</p><button class='x'>✗</button>");
-    }
+    addFlash($flash, "flash-success", $allTodos);
 
     $('button.x').on('click', function(){
       removeParent($(this),'div');
     });
+  });
 
-    $('button.task-x').click(function(){
-
-      var $clicked = $(this)
-
-      $(this).parent('li').remove();
-
-      var $taskFlash = $('.task-flash-remove');
-
-      if($taskFlash.size() > 0){
-        $taskFlash.remove();
-        $clicked.parent('ul').prepend("<div class='task-flash-remove center'><p class='flash-text'>Todo deleted</p><button class='remove-flash'>✗</button>");
-      } else {
-        $clicked.parent('ul').prepend("<div class='task-flash-remove center'><p class='flash-text'>Todo deleted</p><button class='remove-flash'>✗</button>");
-      }
-
-      $('.task-flash-remove').delay(5000).fadeOut();
-
-      $('.remove-flash').click(function(){
-        removeParent($(this),'div');
-      });
-
-      if($('.completed li').length < 1){ $('.completed').hide() }
-
-    });
-
-    $('.check-mark').click(function(){
-      $('.completed').show();
-      $(this).parents('li').appendTo('.completed-list');
-      $(this).remove();
-
-      var $taskComplete = $('.task-flash-complete');
-
-      if($taskComplete.size() > 0){
-        $taskComplete.remove();
-        $('.completed-list').prepend("<div class='task-flash-complete center'><p class='flash-text'>Todo completed</p><button class='remove-flash'>✗</button>");
-      } else {
-        $('.completed-list').prepend("<div class='task-flash-complete center'><p class='flash-text'>Todo completed</p><button class='remove-flash'>✗</button>");
-      }
-
-      $('.remove-flash').click(function(){
-        $(this).parent('div').remove()
-      });
-
-      $('.task-flash-complete').delay(5000).fadeOut();
-
-
-    });
+  $('button').click(function(){
 
   });
 
+  $('.check-mark').click(function(){
+    $('.completed').show();
+    $(this).parents('li').appendTo('.completed-list');
+    $(this).remove();
+
+    var $taskComplete = $('.task-flash-complete');
+
+    if($taskComplete.size() > 0){
+      $taskComplete.remove();
+      $('.completed-list').prepend("<div class='task-flash-complete center'><p class='flash-text'>Todo completed</p><button class='remove-flash'>✗</button>");
+    } else {
+      $('.completed-list').prepend("<div class='task-flash-complete center'><p class='flash-text'>Todo completed</p><button class='remove-flash'>✗</button>");
+    }
+
+    $('.remove-flash').click(function(){
+      $(this).parent('div').remove()
+    });
+
+    $('.task-flash-complete').delay(5000).fadeOut();
+
+
+  });
+
+  $('button.task-x').click(function(){
+
+    debugger;
+
+//      var $id = $(this).parent('li').attr('data-id');
+//      console.log($id);
+
+    var $clicked = $(this);
+
+//      $.ajax({
+//        url: "/tasks",
+//        type: "post",
+//        data: {},
+//        success: function (data) {
+//
+//        }
+//      });
+
+    $(this).parent('li').remove();
+
+    var $taskFlash = $('.task-flash-remove');
+
+    addFlash($taskFlash, 'task-flash-remove', $clicked.parent('ul') );
+
+
+    $('.task-flash-remove').delay(5000).fadeOut();
+
+    $('.remove-flash').click(function(){
+      removeParent($(this),'div');
+    });
+
+    if($('.completed li').length < 1){ $('.completed').hide() }
+
+  });
 
 
 });

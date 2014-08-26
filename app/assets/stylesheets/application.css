@@ -43,6 +43,7 @@ li {
     background-color: green;
     border: 1px solid darkgreen;
     color: white;
+    text-align: center;
     /*clear: both;*/
 }
 
@@ -91,6 +92,7 @@ button.task-x {
     background-color: red;
     border: 1px solid darkred;
     color: white;
+    text-align: center;
 }
 
 .remove-flash {
@@ -114,6 +116,7 @@ button.task-x {
     background-color: green;
     border: 1px solid darkgreen;
     color: white;
+    text-align: center;
 }
 
 
